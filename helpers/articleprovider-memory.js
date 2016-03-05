@@ -1,6 +1,6 @@
 var articleCounter = 1;
 
-function ArticleProvider() { };
+function ArticleProvider() { }
 
 ArticleProvider.prototype.dummyData = [];
 

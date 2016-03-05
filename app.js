@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 // var routes = require('./routes/index');
 // var users = require('./routes/users');
 
-var ArticleProvider = require('./helpers/articleprovider-memory')
+var ArticleProvider = require('./helpers/articleprovider-mongodb')
   .ArticleProvider;
 
 var app = express();
@@ -57,6 +57,25 @@ app.post('/blog/new', function (req, res) {
     body: req.param('body')
   }, function (error, docs) {
     res.redirect('/');
+  });
+});
+
+app.get('/blog/:id', function (req, res) {
+  articleProvider.findById(req.params.id, function (error, article) {
+    res.render('blog_show.jade', {
+      title: article.title,
+      article: article
+    });
+  });
+});
+
+app.post('/blog/addComment', function (req, res) {
+  articleProvider.addCommentToArticle(req.param('_id'), {
+    personL req.param('person'),
+    comment: req.param('comment'),
+    created_at; new Date
+  }, function (error, docs) {
+    res.redirect('/blog/' + req.param('_id'));
   });
 });
 
