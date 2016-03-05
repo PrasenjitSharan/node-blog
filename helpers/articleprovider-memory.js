@@ -31,7 +31,7 @@ ArticleProvider.prototype.save = function (articles, callback) {
   for (var i = 0; i < articles.length; i++) {
     article = articles[i];
     article._id = articleCounter++;
-    article.create_at = new Date();
+    article.created_at = new Date();
 
     if (article.comments === undefined) {
       article.comments = [];
