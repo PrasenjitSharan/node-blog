@@ -8,8 +8,7 @@ var bodyParser = require('body-parser');
 // var routes = require('./routes/index');
 // var users = require('./routes/users');
 
-var ArticleProvider = require('./helpers/articleprovider-mongodb')
-  .ArticleProvider;
+var ArticleProvider = require('./helpers/articleprovider-mongodb').ArticleProvider;
 
 var app = express();
 
@@ -34,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', routes);
 // app.use('/users', users);
 
-var articleProvider = new ArticleProvider();
+var articleProvider = new ArticleProvider('localhost', 27017);
 
 app.get('/', function (req, res) {
   articleProvider.findAll(function (error, docs) {
@@ -71,9 +70,9 @@ app.get('/blog/:id', function (req, res) {
 
 app.post('/blog/addComment', function (req, res) {
   articleProvider.addCommentToArticle(req.param('_id'), {
-    personL req.param('person'),
+    person: req.param('person'),
     comment: req.param('comment'),
-    created_at; new Date
+  created_at: new Date()
   }, function (error, docs) {
     res.redirect('/blog/' + req.param('_id'));
   });
